@@ -1,16 +1,16 @@
 import requests
 import pygame
 from pygame.locals import *
-import json
+
 pygame.init()
 
 
 
 #get public IP
 def getip():
-    response = requests.get('https://api.ipify.org?format=json')
-    results = response.json()
-    return json.load(results)
+    response = requests.get('https://api.ipify.org/?format=unicode')
+    results = response.content.decode('utf-8')
+    return results
 
 
 #create window
@@ -32,10 +32,4 @@ def gameloop():
                 running = False
         drawwindow()
 
-
-
-
-
-
-
-getip()
+gameloop()
