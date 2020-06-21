@@ -3,33 +3,49 @@ import pygame
 from pygame.locals import *
 
 pygame.init()
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
+
 
 
 
 #get public IP
 def getip():
-    response = requests.get('https://api.ipify.org/?format=unicode')
-    results = response.content.decode('utf-8')
-    return results
+    return requests.get('https://api.ipify.org').text
+
 
 
 #create window
-def drawwindow():
+def drawwindow(ip):
     pygame.display.set_caption('Public IP')
-    surface = pygame.display.set_mode((200, 100))
+    surface = pygame.display.set_mode([250, 75], pygame.SRCALPHA)
+    surface.fill(BLACK)
     myfont = pygame.font.SysFont('Droid Sans', 30)
-    textsurface = myfont.render(getip(), False, (255, 0, 0))
-    surface.blit(textsurface,(0,0))
-    pygame.display.flip()
+    textsurface = myfont.render(ip, False, (204,255, 255))
+    surface.blit(textsurface,(45,10))
+def clock(fps):
+    clock = pygame.time.Clock()
+    clock.tick(fps)
 
 
 # Game Loop
 def gameloop():
     running = True
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+            quit()
+
     while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-        drawwindow()
+        clock(60)
+        drawwindow(getip())
+        pygame.display.flip()
+
+
+
+
 
 gameloop()
