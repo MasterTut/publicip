@@ -34,17 +34,19 @@ def clock(fps):
 # Game Loop
 def gameloop():
     running = True
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-            quit()
-
     while running:
+
         clock(60)
         drawwindow(getip())
         pygame.display.flip()
 
-#testing  commit
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+
+
+#testing
 
 
 
