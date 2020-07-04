@@ -5,8 +5,8 @@ WIDTH = 1200
 HEIGHT = 600
 BORDER = 20
 VELOCITY = 1
-MOVE = 1
-#dir = {K_LEFT: (-5, 0), K_RIGHT: (5, 0), K_UP: (0, -5), K_DOWN: (0, 5)}
+MOVE = 0
+
 
 # define my classes
 
@@ -46,9 +46,15 @@ class Paddle:
         global screen
         pygame.draw.rect(screen, color,(WIDTH - 20, self.y,10, 100))
     def update(self, v):
+        global MOVE
         self.show(bgcolor)
         self.y = self.y + v
+        print(self.y)
+
         self.show(fgcolor)
+
+        if self.y == HEIGHT - (100 + BORDER) or self.y == 0 + BORDER:
+            MOVE = 0
 
 
 #create objects
@@ -83,16 +89,13 @@ def gameloop():
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    print("Left arrow is pressed")
                 if event.key == pygame.K_DOWN:
-                    MOVE = MOVE + 1
-                    print(MOVE)
-                if event.key == pygame.K_RIGHT:
-                    print("RIGHT arrow is pressed")
+                    MOVE = MOVE + .5
+
                 if event.key == pygame.K_UP:
-                    MOVE = MOVE - 1
+                    MOVE = MOVE - .5
                     print(MOVE)
+
 
 
 gameloop()
