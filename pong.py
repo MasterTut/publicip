@@ -5,6 +5,7 @@ WIDTH = 1200
 HEIGHT = 600
 BORDER = 20
 VELOCITY = 1
+MOVE = 1
 #dir = {K_LEFT: (-5, 0), K_RIGHT: (5, 0), K_UP: (0, -5), K_DOWN: (0, 5)}
 
 # define my classes
@@ -37,19 +38,23 @@ class Ball:
             self.y = self.y + self.vy
             self.show(fgcolor)
 class Paddle:
-    SHAPE = (20,20)
+
     def __init__(self,y):
         self.y = y
+
     def show(self, color):
         global screen
-        pygame.draw.rect(screen, color,(WIDTH - 20,HEIGHT//2,10, 100))
-
+        pygame.draw.rect(screen, color,(WIDTH - 20, self.y,10, 100))
+    def update(self, v):
+        self.show(bgcolor)
+        self.y = self.y + v
+        self.show(fgcolor)
 
 
 #create objects
 
 ballplay = Ball(WIDTH - Ball.RADIUS, HEIGHT//2, -VELOCITY, -VELOCITY)
-paddleplay = Paddle(WIDTH)
+paddleplay = Paddle(HEIGHT//2)
 # Draw the scenario
 pygame.init()
 fgcolor = pygame.Color("white")
@@ -66,19 +71,28 @@ paddleplay.show(fgcolor)
 
 
 def gameloop():
+    global MOVE
     running = True
     while running:
         pygame.display.flip()
         ballplay.update()
-
+        paddleplay.update(MOVE)
 
         for event in pygame.event.get():
 
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.KEYDOWN:
-                if event.key == K_c:
-                    paddleplay.down = 0
+                if event.key == pygame.K_LEFT:
+                    print("Left arrow is pressed")
+                if event.key == pygame.K_DOWN:
+                    MOVE = MOVE + 1
+                    print(MOVE)
+                if event.key == pygame.K_RIGHT:
+                    print("RIGHT arrow is pressed")
+                if event.key == pygame.K_UP:
+                    MOVE = MOVE - 1
+                    print(MOVE)
 
 
 gameloop()

@@ -17,18 +17,9 @@ while running:
             running =False
 
         if event.type == KEYDOWN:
-            if event.key == pygame.K_l:
+            if event.key == pygame.K_LEFT:
                 rect.left = 0
-            if event.key == pygame.K_c:
-                rect.centerx = width//2
-            if event.key == pygame.K_r:
-                rect.right = width
-            if event.key == pygame.K_t:
-                rect.top = 0
-            if event.key == pygame.K_m:
-                rect.centery = height//2
-            if event.key == pygame.K_b:
-                rect.bottom = height
+            
 
             screen.fill(WHITE)
 
