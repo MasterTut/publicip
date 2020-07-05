@@ -76,7 +76,7 @@ ballplay.show(fgcolor)
 paddleplay.show(fgcolor)
 def youlose():
     myfont = pygame.font.SysFont('Droid Sans', 100)
-    youlose = myfont.render('You Lose', False, (fgcolor))
+    youlose = myfont.render('You Lose\r\Do you want to try agian?\r\YES ' + 'NO', False, (fgcolor))
     screen.blit(youlose, (WIDTH//2 - 100,HEIGHT//2))
 
 def gameloop():
