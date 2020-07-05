@@ -49,7 +49,7 @@ class Paddle:
         global MOVE
         self.show(bgcolor)
         self.y = self.y + v
-        print(self.y)
+
 
         self.show(fgcolor)
 
@@ -59,7 +59,7 @@ class Paddle:
 
 #create objects
 
-ballplay = Ball(WIDTH - Ball.RADIUS, HEIGHT//2, -VELOCITY, -VELOCITY)
+ballplay = Ball(WIDTH - (Ball.RADIUS + 20), HEIGHT//2, -VELOCITY, -VELOCITY)
 paddleplay = Paddle(HEIGHT//2)
 # Draw the scenario
 pygame.init()
@@ -71,30 +71,48 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.draw.rect(screen, fgcolor, pygame.Rect((0,0), (WIDTH,BORDER))) #top
 pygame.draw.rect(screen, fgcolor, pygame.Rect((0,0), (BORDER, HEIGHT))) #left
 pygame.draw.rect(screen, fgcolor, pygame.Rect(0,HEIGHT-BORDER, WIDTH, BORDER)) #bottom
-#pygame.draw.rect(screen, fgcolor, pygame.Rect(WIDTH-BORDER,0,  BORDER, WIDTH)) # right
+
 ballplay.show(fgcolor)
 paddleplay.show(fgcolor)
-
+def youlose():
+    myfont = pygame.font.SysFont('Droid Sans', 100)
+    youlose = myfont.render('You Lose', False, (fgcolor))
+    screen.blit(youlose, (WIDTH//2 - 100,HEIGHT//2))
 
 def gameloop():
     global MOVE
     running = True
     while running:
+
         pygame.display.flip()
+
         ballplay.update()
         paddleplay.update(MOVE)
+
+
+
+
 
         for event in pygame.event.get():
 
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_DOWN:
-                    MOVE = MOVE + .5
+                if event.key == pygame.K_DOWN and paddleplay.y != 480:
+                    MOVE = MOVE + 1
 
-                if event.key == pygame.K_UP:
-                    MOVE = MOVE - .5
-                    print(MOVE)
+                if event.key == pygame.K_UP and paddleplay.y != 20:
+                    MOVE = MOVE - 1
+                if event.key == pygame.K_RIGHT:
+                    MOVE = 0
+
+
+            if ballplay.y >= paddleplay.y + 25 and ballplay.x >= 1200:
+                ballplay.vx = +ballplay.vy
+            elif ballplay.x >= 1200:
+                youlose()
+
+
 
 
 
